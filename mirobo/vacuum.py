@@ -22,6 +22,7 @@ class Vacuum:
         self.__id = 0
         self._devtype = None
         self._serial = None
+        self._ts = None
 
     def __enter__(self):
         """Does a discover to fetch the devtype and serial."""
@@ -29,6 +30,7 @@ class Vacuum:
         if m is not None:
             self._devtype = m.header.value.devtype
             self._serial = m.header.value.serial
+            self._ts = m.header.value.ts
         else:
             _LOGGER.error("Unable to discover a device at address %s", self.ip)
 
@@ -98,7 +100,7 @@ class Vacuum:
 
         header = {'length': 0, 'unknown': 0x00000000,
                   'devtype': self._devtype, 'serial': self._serial,
-                  'ts': datetime.datetime.utcnow()}
+                  'ts': self._ts}
 
         msg = {'data': {'value': cmd},
                'header': {'value': header},
