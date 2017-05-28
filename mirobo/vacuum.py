@@ -127,6 +127,7 @@ class Vacuum:
             _LOGGER.debug("%s:%s (ts: %s) << %s" % (self.ip, self.port,
                                                     m.header.value.ts,
                                                     m.data.value))
+            self._ts = m.header.value.ts
             return m.data.value["result"]
         except Exception as ex:
             _LOGGER.error("got error when receiving: %s" % ex)
