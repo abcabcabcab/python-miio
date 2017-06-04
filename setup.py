@@ -1,16 +1,16 @@
 from setuptools import setup
 
-with open('mirobo/version.py') as f: exec(f.read())
+with open('miio/version.py') as f: exec(f.read())
 
 setup(
-    name='python-mirobo',
+    name='python-miio',
 
     version=__version__,
-    description='Python library for interfacing with Xiaomi Vacuum cleaner robot',
-    url='https://github.com/rytilahti/python-mirobo',
+    description='Python library for miio',
+    url='https://github.com/SchumyHao/python-mirobo',
 
-    author='Teemu Rytilahti',
-    author_email='tpr@iki.fi',
+    author='SchumyHao',
+    author_email='bob-hjl@126.com',
 
     license='GPLv3',
 
@@ -21,14 +21,14 @@ setup(
         'Programming Language :: Python :: 3',
     ],
 
-    keywords='xiaomi vacuum',
+    keywords='xiaomi, miio',
 
-    packages=["mirobo"],
+    packages=["miio"],
 
-    install_requires=['construct', 'click', 'cryptography', 'pretty_cron'],
+    install_requires=['construct', 'click', 'cryptography'],
     entry_points={
         'console_scripts': [
-            'mirobo=mirobo.cli:cli',
+            'miio=miio.cli:cli',
         ],
     },
 )
