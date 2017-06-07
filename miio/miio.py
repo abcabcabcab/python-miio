@@ -16,8 +16,6 @@ class device:
         self.token = bytes.fromhex(token)
         self.debug = debug
 
-        # TODO this is a mess, find a nicer way to provide token to construct
-        Utils.token = self.token
         self._timeout = 5
         self.__id = 0
         self._devtype = None
@@ -110,11 +108,12 @@ class device:
         msg = {'data': {'value': cmd},
                'header': {'value': header},
                'checksum': 0}
-        m = Message.build(msg)
+        ctx = {'token': self.token}
+        m = Message.build(msg, ctx)
         _LOGGER.debug("%s:%s >>: %s" % (self.ip, self.port, cmd))
         if self.debug > 1:
             _LOGGER.debug("send (timeout %s): %s",
-                          self._timeout, Message.parse(m))
+                          self._timeout, Message.parse(m, ctx))
 
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.settimeout(self._timeout)
@@ -126,7 +125,7 @@ class device:
 
         try:
             data, addr = s.recvfrom(1024)
-            m = Message.parse(data)
+            m = Message.parse(data, ctx)
             if self.debug > 1:
                 _LOGGER.debug("recv: %s" % m)
             _LOGGER.debug("%s:%s (ts: %s) << %s" % (self.ip, self.port,
