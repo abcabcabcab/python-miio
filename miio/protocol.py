@@ -2,7 +2,7 @@ import datetime
 import hashlib
 import json
 import logging
-import calendar
+import time
 
 from construct import (Struct, Bytes, Const, Int16ub, Int32ub, GreedyBytes,
                        Adapter, Checksum, RawCopy, Rebuild, IfThenElse,
@@ -103,7 +103,7 @@ class Utils:
 class TimeAdapter(Adapter):
     """Adapter for timestamp conversion."""
     def _encode(self, obj, context):
-        return calendar.timegm(obj.timetuple())
+        return int(time.mktime(obj.timetuple()))
 
     def _decode(self, obj, context):
         return datetime.datetime.fromtimestamp(obj)
