@@ -97,8 +97,7 @@ class device:
             "method": command,
         }
 
-        if parameters:
-            cmd["params"] = parameters
+        cmd["params"] = parameters
 
         self._ts += datetime.timedelta(seconds = delta_ts)
         header = {'length': 0, 'unknown': 0x00000000,
